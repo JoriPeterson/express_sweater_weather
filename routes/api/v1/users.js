@@ -1,30 +1,28 @@
 var express = require('express');
 var router = express.Router();
-
 var user = require('../../../models').User
-
-function generateAPI(){
-  return "1234";
-}
+var bcrypt = require('bcrypt')
+const saltRounds = 10
+const uuidv1 = require('uuid/v1');
 
 router.post("/", function(req, res, next){
   res.setHeader("Content-type", "application/json")
 
-  user.create({
-    email: req.body.email,
-    password: req.body.password,
-    apiKey: generateAPI()
-  })
+  if (req.body.password === req.body.passwordConfirmation){
+    user.create({
+      email: req.body.email,
+      password: bcrypt.hashSync(req.body.password, saltRounds),
+      apiKey: uuidv1()
+    })
     .then(user => {
-      payload = {
-        apiKey: generateAPI()
-      }
-      res.status(201).send(payload)
+    res.status(201).send(JSON.stringify({ apiKey: user.apiKey }))
     })
     .catch(error => {
-      console.log(error)
-      res.status(500).send({error})
+      res.status(500).send(JSON.stringify("Your information is not correct!"));
     })
-})
+  } else {
+      res.status(401).send(JSON.stringify("Oh no! Something went wrong!"));
+    }
+  })
 
 module.exports = router;
