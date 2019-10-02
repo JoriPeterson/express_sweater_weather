@@ -15,14 +15,15 @@ router.post("/", function(req, res, next){
       apiKey: uuidv1()
     })
     .then(user => {
-    res.status(201).send(JSON.stringify({ apiKey: user.apiKey }))
+      res.status(201).send({ api_key: user.apiKey })
     })
-    .catch(error => {
-      res.status(500).send(JSON.stringify("Your information is not correct!"));
-    })
+
   } else {
-      res.status(401).send(JSON.stringify("Oh no! Something went wrong!"));
+      res.status(401).send("Your information is not correct!");
     }
+    .catch(error => {
+      res.status(500).send("Oh no! Something went wrong!")
+    })
   })
 
 module.exports = router;
