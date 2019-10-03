@@ -4,14 +4,14 @@ var app = require('../app');
 
 describe('api', () => {
   beforeAll(() => {
-    shell.exec('npx sequelize db:create')
+    shell.exec('npx sequelize db:create --env test')
   });
   beforeEach(() => {
-      shell.exec('npx sequelize db:migrate')
-      shell.exec('npx sequelize db:seed:all')
+      shell.exec('npx sequelize db:migrate --env test')
+      shell.exec('npx sequelize db:seed:all --env test')
     });
   afterEach(() => {
-    shell.exec('npx sequelize db:migrate:undo:all')
+    shell.exec('npx sequelize db:migrate:undo:all --env test')
   });
 });
 
@@ -25,5 +25,18 @@ describe('POST /api/v1/users', () => {
         res.body.apiKey = user.apiKey;
         })
       .expect(201);
+  });
+});
+
+describe('POST /api/v1/sessions', () => {
+  it('Registered user gets api key returned', () => {
+    request(app)
+      .post('/sessions')
+      .send('email=jori@gmail', 'password=password')
+      .set('Accept', 'application/json')
+      .expect(function(res) {
+        res.body.apiKey = user.apiKey;
+        })
+      .expect(200);
   });
 });
