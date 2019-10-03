@@ -16,10 +16,10 @@
     "operatorsAliases": false
   },
   "production": {
-    "username": "szubhmbzccnmsi",
-    "password": "3dfa0faebb4e0028ec145bcac1021673de91268f256f3523d6126b5d714fdc87",
-    "database": "d5p7d16pcmq3mq",
-    "host": "ec2-174-129-241-14.compute-1.amazonaws.com",
+    "username": "Jori",
+    "password": null,
+    "database": "sweater_weather_production",
+    "host": "127.0.0.1",
     "dialect": "postgres",
     "operatorsAliases": false
   }
