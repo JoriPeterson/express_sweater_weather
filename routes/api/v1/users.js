@@ -3,7 +3,7 @@ var router = express.Router();
 var user = require('../../../models').User
 var bcrypt = require('bcrypt')
 const saltRounds = 10
-const uuidv1 = require('uuid/v1');
+const uuidv4 = require('uuid/v4');
 
 router.post("/", function(req, res, next){
   res.setHeader("Content-type", "application/json")
@@ -13,7 +13,7 @@ router.post("/", function(req, res, next){
     user.create({
       email: req.body.email,
       password: bcrypt.hashSync(req.body.password, saltRounds),
-      apiKey: uuidv1()
+      apiKey: uuidv4()
     })
     .then(user => {
       res.status(201).send({ api_key: user.apiKey })

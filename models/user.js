@@ -13,9 +13,6 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
       require: true,
-      // validate: {
-      //   len: [2,10],
-      // }
     },
     apiKey: DataTypes.STRING
   }, {});
