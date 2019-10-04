@@ -40,3 +40,16 @@ describe('POST /api/v1/sessions', () => {
       .expect(200);
   });
 });
+
+describe('GET /api/v1/forecast', () => {
+  it('Registered user gets weather forecast', () => {
+    request(app)
+      .post('/sessions')
+      .send('apiKey=f4b56cb7-7f0a-4d79-95a8-fc4eb292e90b')
+      .set('Accept', 'application/json')
+      .expect(function(res) {
+        res.body = weather;
+        })
+      .expect(200);
+  });
+});
