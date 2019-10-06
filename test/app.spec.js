@@ -18,7 +18,7 @@ describe('api', () => {
 describe('POST /api/v1/users', () => {
   it('User should post to db and api key returned', () => {
     request(app)
-      .post('/users')
+      .post('/api/v1/users')
       .send('email=jori@gmail', 'password=password', 'passwordConfirmation=password')
       .set('Accept', 'application/json')
       .expect(function(res) {
@@ -28,28 +28,26 @@ describe('POST /api/v1/users', () => {
   });
 });
 
-describe('POST /api/v1/sessions', () => {
-  it('Registered user gets api key returned', () => {
-    request(app)
-      .post('/sessions')
-      .send('email=jori@gmail', 'password=password')
-      .set('Accept', 'application/json')
-      .expect(function(res) {
-        res.body.apiKey = user.apiKey;
-        })
-      .expect(200);
-  });
-});
+// describe('POST /api/v1/sessions', () => {
+//   test('Registered user gets api key returned', () => {
+//     return request(app)
+//       .post('/api/v1/sessions')
+//       .send('email=jori@gmail', 'password=password')
+//       .then(response => {
+//         expect(res.body.apiKey == user.apiKey)
+//         expect(response.status).toBe(200);
+//       });
+//   });
+// });
 
 describe('GET /api/v1/forecast', () => {
-  it('Registered user gets weather forecast', () => {
-    request(app)
-      .post('/sessions')
-      .send('apiKey=f4b56cb7-7f0a-4d79-95a8-fc4eb292e90b')
-      .set('Accept', 'application/json')
-      .expect(function(res) {
-        res.body = weather;
-        })
-      .expect(200);
+  test('Registered user gets weather forecast', () => {
+    return request(app)
+      .get('/api/v1/forecast?location=Denver,CO')
+      .send({api_key: 'api_key=f4b56cb7-7f0a-4d79-95a8-fc4eb292e90b'})
+      .then(response => {
+        expect(response.body == weather)
+        expect(response.status).toBe(200);
+      })
   });
 });
