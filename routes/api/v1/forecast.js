@@ -2,26 +2,51 @@ var express = require('express');
 var router = express.Router()
 var fetch = require('node-fetch')
 var dotenv = require('dotenv').config()
+var user = require('../../../models').User
 var location = require('../../../models').Location
 
 router.get("/", function(req, res, next){
-  let location;
   res.setHeader("Content-type", "application/json")
-  // findOne where req.body.api_key exists
-  // findOne (location)
-  // no location
-  // then
-  fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${req.query.location}&key=${process.env.GOOGLE_API_KEY}`)
-  .then(response => response.json())
-  .then(result => location = {location: req.query.location,
-                              lat: result['results'][0]['geometry']['location']['lat'],
-                              lng: result['results'][0]['geometry']['location']['lng'])}
-  Location.create(location)
-  // fetch(DarkSkyAPI (location.lat, location.lng))
+  user.findAll().then(users => res.status(401).send({what: "users"}))
+  .catch(res.status(401).send({what: "no users"}))
 
-  // send parsed json - user story requirements
+  user.findOne({
+    where: {
+      apiKey: req.body.api_key
+    }
+  })
+  .then(user => {
 
+    location.findOne ({
+      where: {
+        location: req.query.location
+      }
+    })
+    .then(location => {
+      if (location === null) {
+        fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${req.query.location}&key=${process.env.GOOGLE_API_KEY}`)
+        .then(response => response.json())
+        .then(result => location = {location: req.query.location,
+          lat: result['results'][0]['geometry']['location']['lat'],
+          lng: result['results'][0]['geometry']['location']['lng']})
+
+        Location.create(location)
+      }
+      return location
+    })
+    .then(user => {
+
+      fetch(`https://api.darksky.net/forecast/${process.env.DarkSkyAPI}/${location.lat},${location.lng}?exclude=minutely`)
+      .then(response => response.json())
+      .then(result => console.log(result))
+    })
+    .catch(error => {
+      res.status(401).send({what: "Some other problem"})
+    })
+  })
+  .catch(error => {
+    res.status(401).send({what: "Invalid API Key"})
+  })
 })
 
-// async await... instead of .then if you don't store in database
 module.exports = router;
