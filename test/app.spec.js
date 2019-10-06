@@ -1,6 +1,8 @@
 var shell = require('shelljs');
 var request = require("supertest");
 var app = require('../app');
+var user = require('../models').User
+var location = require('../models').Location
 
 describe('api', () => {
   beforeAll(() => {
@@ -9,6 +11,11 @@ describe('api', () => {
   beforeEach(() => {
       shell.exec('npx sequelize db:migrate --env test')
       shell.exec('npx sequelize db:seed:all --env test')
+      user.create({
+        email: req.body.email,
+        password: bcrypt.hashSync(req.body.password, saltRounds),
+        apiKey: uuidv4()
+      })
     });
   afterEach(() => {
     shell.exec('npx sequelize db:migrate:undo:all --env test')
@@ -44,9 +51,11 @@ describe('GET /api/v1/forecast', () => {
   test('Registered user gets weather forecast', () => {
     return request(app)
       .get('/api/v1/forecast?location=Denver,CO')
-      .send({api_key: 'api_key=f4b56cb7-7f0a-4d79-95a8-fc4eb292e90b'})
+      .send({api_key: `api_key=${user.apiKey}`})
+      .set('Accept', 'application/json')
       .then(response => {
-        expect(response.body == weather)
+        console.log(response.body.what)
+        // expect(Object.keys(response.body[0])).toContain('title')
         expect(response.status).toBe(200);
       })
   });
