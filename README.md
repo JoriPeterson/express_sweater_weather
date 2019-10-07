@@ -2,7 +2,7 @@
 
 ### Introduction
 
-Express Sweater Weather my first attempt at Node.js and Express. This application uses POST and GET requests to enable users to register with their email, then get an API key in order to access weather forecasts for their preferred locations.
+Express Sweater Weather is my first attempt at Node.js and Express. This application uses POST and GET requests to enable users to register with their email, then get an API key in order to access weather forecasts for their preferred locations.
 
 Ideally, a user would be able to get make a favorites’ list, retrieve that list, and also be able to delete favorites from their list. This functionality has not been built out at this time.
 
@@ -21,7 +21,7 @@ Ideally, a user would be able to get make a favorites’ list, retrieve that lis
 
 ### How to Use
 
-First fun `npm start` to get your local host up and running
+First run `npm start` to get your local host up and running.
 Test out the endpoints in Postman or the application of your choice
 
 ```.env
@@ -71,12 +71,11 @@ And currently in progress, a user can enter their API key to receive a weather f
 
 At the moment, there is an issue with a nested fetch request in the `/routes/api/v1/forecast.js` file. This is what I am currently working my way through.
 
-
 ### Running Tests
 
 Testing for express_sweater_weather is done through Jest.
 Two tests are passing for User Creation and User Sessions.
-The third test for Retrieving Forecast is still in progress.
+The third test for Retrieving Forecasts is still in progress.
 
 `npm install babel-jest supertest shelljs -D`
 `nmp test`
@@ -90,15 +89,15 @@ If you'd like to contribute, fork and clone this repo, make your changes and sub
 So far, just me!
 - [Jori Peterson](https://github.com/JoriPeterson)
 
-### Schema Design
-
-In a future iteration, there would be a user_favorites join table with a user_id and a location_id. 
-
-![express_sweater_weather schema](/schema_diagram.png?raw=true "Sweather_Weather_Schema")
-
 ### Tech Stack List
 
-This app is built in Express with Node.js
-Testing is done with Jest
-The database is PostgresQL, in conjunction with Sequelize
-This application uses the Google Geocoding API (for latitude and longitude), and the weather calls are made through DarkSky API
+- This app is built in Express with Node.js
+- Testing is done with Jest
+- The database is PostgresQL, in conjunction with Sequelize
+- This application uses the Google Geocoding API (for latitude and longitude), and the weather calls are made through DarkSky API
+
+### Schema Design
+
+In a future iteration, there would be a user_favorites join table with a user_id and a location_id.
+
+![express_sweater_weather schema](/schema_diagram.png?raw=true "Sweather_Weather_Schema")
