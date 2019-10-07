@@ -15,9 +15,16 @@ Ideally, a user would be able to get make a favorites’ list, retrieve that lis
 * `$ git clone git@github.com:JoriPeterson/express_sweater_weather.git`
 * `$ cd express_sweater_weather`
 * `$ npm install`
-* `$ npm install --save sequelize sequelize-cli pg`
 * `$ npx sequelize db:create`
 * Make sure node_modules are in your .gitignore.
+
+### Running Tests
+
+Testing for express_sweater_weather is done through Jest.
+Two tests are passing for User Creation and User Sessions.
+The third test for Retrieving Forecasts is still in progress.
+
+`nmp test`
 
 ### How to Use
 
@@ -71,14 +78,6 @@ And currently in progress, a user can enter their API key to receive a weather f
 
 At the moment, there is an issue with a nested fetch request in the `/routes/api/v1/forecast.js` file. This is what I am currently working my way through.
 
-### Running Tests
-
-Testing for express_sweater_weather is done through Jest.
-Two tests are passing for User Creation and User Sessions.
-The third test for Retrieving Forecasts is still in progress.
-
-`npm install babel-jest supertest shelljs -D`
-`nmp test`
 
 ### How to Contribute
 
