@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var user = require('../../../models').User
+var User = require('../../../models').User
 var bcrypt = require('bcrypt')
 const saltRounds = 10
 const uuidv4 = require('uuid/v4');
@@ -10,7 +10,7 @@ router.post("/", function(req, res, next){
 
   if (req.body.password === req.body.passwordConfirmation
     && req.body.password.length > 1){
-    user.create({
+    User.create({
       email: req.body.email,
       password: bcrypt.hashSync(req.body.password, saltRounds),
       apiKey: uuidv4()
