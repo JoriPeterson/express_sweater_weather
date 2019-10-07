@@ -1,14 +1,13 @@
 var express = require('express');
 var router = express.Router();
-var user = require('../../../models').User
+var User = require('../../../models').User
 var bcrypt = require('bcrypt')
 const saltRounds = 10;
-const uuidv1 = require('uuid/v1');
 
 router.post("/", function(req, res, next){
   res.setHeader("Content-type", "application/json")
 
-  user.findOne({
+  User.findOne({
     where: {
       email: req.body.email
     }
