@@ -4,7 +4,6 @@ module.exports = (sequelize, DataTypes) => {
     email: {
       type: DataTypes.STRING,
       allowNull: false,
-      // isUnique: true, // i don't work? who knows why?
       validate: {
         isEmail: true
       }
