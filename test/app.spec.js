@@ -91,7 +91,7 @@ describe('GET /api/v1/forecast', () => {
           console.log('step 2' + response)
           expect(response.status).toBe(207);
           console.log(response.body)
-          expect(response["currently"]).toBe(null)
+          expect(response.body.currently).toBeDefined()
           // expect(Object.keys(response.body)).toContain('currently')
 
         })
