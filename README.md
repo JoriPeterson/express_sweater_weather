@@ -16,6 +16,7 @@ Ideally, a user would be able to get make a favorites’ list, retrieve that lis
 * `$ cd express_sweater_weather`
 * `$ npm install`
 * `$ npx sequelize db:create`
+* `$ npx sequelize db:seed:all`
 * Make sure node_modules are in your .gitignore.
 
 ### Running Tests
